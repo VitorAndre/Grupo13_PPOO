@@ -1,30 +1,16 @@
 package simulacao;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
+//Representa as cidades da simulacao.
 
-/**
- * Representa os veiculos da simulacao.
- * @author David J. Barnes and Michael Kolling and Luiz Merschmann
- */
-public class Cidade {
-    private Localizacao localizacaoAtual;
-    private Image imagem;
+public class Cidade extends Obstaculo {
+    private String nome;
 
-    public Cidade(Localizacao localizacao) {
-        this.localizacaoAtual = localizacao;
-        imagem = new ImageIcon(getClass().getResource("Imagens/veiculo.jpg")).getImage();
+    public Cidade(Localizacao localizacao, String nomeImagem, String nome) {
+        super(localizacao, nomeImagem);
+        this.nome = nome;
     }
 
-    public Localizacao getLocalizacaoAtual() {
-        return localizacaoAtual;
-    }
-
-    public Image getImagem(){
-        return imagem;
-    }
-
-    public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
-        this.localizacaoAtual = localizacaoAtual;
+    public String getNome() {
+        return nome;
     }
 }

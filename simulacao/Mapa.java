@@ -7,6 +7,7 @@ package simulacao;
 public class Mapa {
     private Veiculo[][] itens;
     private Cidade[][] cidades;
+    private Obstaculo[][] obstaculos;
     private int largura;
     private int altura;
     
@@ -23,6 +24,7 @@ public class Mapa {
         this.altura = altura;
         itens = new Veiculo[altura][largura];
         cidades = new Cidade[altura][largura];
+        obstaculos = new Obstaculo[altura][largura];
     }
     /**
      * Cria mapa com tamanho padrao.
@@ -34,6 +36,10 @@ public class Mapa {
     public void adicionarCidade(Cidade c){
         cidades[c.getLocalizacaoAtual().getX()][c.getLocalizacaoAtual().getY()] = c;
     }
+
+    public void adicionarObstaculo(Obstaculo o){
+        obstaculos[o.getLocalizacaoAtual().getX()][o.getLocalizacaoAtual().getY()] = o;
+    }
     
     public void adicionarItem(Veiculo v){
         itens[v.getLocalizacaoAtual().getX()][v.getLocalizacaoAtual().getY()] = v;
@@ -43,13 +49,23 @@ public class Mapa {
         itens[v.getLocalizacaoAtual().getX()][v.getLocalizacaoAtual().getY()] = null;
     }
     
-    public void atualizarMapa(Veiculo v){
+    public void atualizarMapa(Veiculo v, Cidade c, Obstaculo o){
         removerItem(v);
         adicionarItem(v);
+        adicionarCidade(c);  
+        adicionarObstaculo(o);      
     }
     
     public Veiculo getItem(int x, int y){
         return itens[x][y];
+    }
+
+    public Cidade getCidade(int x, int y){
+        return cidades[x][y];
+    }
+
+    public Obstaculo getObstaculo(int x, int y){
+        return obstaculos[x][y];
     }
 
     public int getLargura() {
