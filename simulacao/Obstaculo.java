@@ -16,6 +16,10 @@ public class Obstaculo {
         return localizacaoAtual;
     }
 
+    public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
+        this.localizacaoAtual = localizacaoAtual;
+    }
+
     public Image getImagem(){
         return imagem;
     }
