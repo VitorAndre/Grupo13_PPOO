@@ -1,4 +1,3 @@
-package simulacao;
 /**
  *
  * @author Luiz Merschmann

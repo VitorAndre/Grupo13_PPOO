@@ -46,7 +46,7 @@ public class Simulacao {
         mapa.adicionarCidade(madagascar);
         novaYork = new Cidade(new Localizacao(4,4), "Imagens/NY.png", "Nova York");
         mapa.adicionarCidade(novaYork);
-        paris = new Cidade(new Localizacao(28,2), "Imagens/paris.png", "Paris");
+        paris = new Cidade(new Localizacao(28,2), "Imagens/Paris.png", "Paris");
         mapa.adicionarCidade(paris);
         portugal = new Cidade(new Localizacao(25,4), "Imagens/portugal.png", "Lisboa");
         mapa.adicionarCidade(portugal);
@@ -66,7 +66,7 @@ public class Simulacao {
         janelaSimulacao.executarAcao();
         for (int i = 0; i < numPassos; i++) {
             executarUmPasso();
-            esperar(100);
+            esperar(300);
         }        
     }
 
@@ -120,13 +120,9 @@ public class Simulacao {
             veiculo4.executarAcao();
             
         } else {
-            novaLocalizacao = new Localizacao(veiculo4.getLocalizacaoAtual().getX()-1, veiculo4.getLocalizacaoAtual().getY()-1);
-            veiculo4.setLocalizacaoAtual(novaLocalizacao);
+            novaLocalizacao = new Localizacao(veiculo4.getLocalizacaoAtual().getX(), veiculo4.getLocalizacaoAtual().getY()+1);
             veiculo4.setLocalizacaoAtual(novaLocalizacao);
         }
-        
-        
-        
              
         janelaSimulacao.executarAcao();
     }
