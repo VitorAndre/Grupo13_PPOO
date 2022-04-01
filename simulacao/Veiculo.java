@@ -1,3 +1,4 @@
+package simulacao;
 /**
  * Representa os veiculos da simulacao.
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann

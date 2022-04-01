@@ -1,3 +1,5 @@
+package simulacao;
+
 import java.util.Random;
 
 /**
@@ -42,7 +44,7 @@ public class Localizacao {
             int deslocY = y < destY ? 1 : y > destY ? -1 : 0;//Deslocamento de 1 ou 0 ou -1 posição em y
             Localizacao novaLocalizacao;
             if(deslocX != 0 && deslocY != 0){//Se nenhuma coordenada coincide com a localizacao destino
-                if(rand.nextInt(2) == 0){//Atualizar x
+                if(deslocX == 1){//Atualizar x
                     novaLocalizacao = new Localizacao(x + deslocX, y);
                 }else{//Atualizar y
                     novaLocalizacao = new Localizacao(x, y + deslocY);

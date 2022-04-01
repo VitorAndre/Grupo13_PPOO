@@ -1,3 +1,4 @@
+package simulacao;
 //Representa as cidades da simulacao.
 
 public class Cidade extends Obstaculo {

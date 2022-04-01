@@ -120,7 +120,7 @@ public class Simulacao {
             veiculo4.executarAcao();
             
         } else {
-            novaLocalizacao = new Localizacao(veiculo4.getLocalizacaoAtual().getX(), veiculo4.getLocalizacaoAtual().getY()+1);
+            novaLocalizacao = new Localizacao(veiculo4.getLocalizacaoAtual().getX()-1, veiculo4.getLocalizacaoAtual().getY()-1);
             veiculo4.setLocalizacaoAtual(novaLocalizacao);
         }
              
