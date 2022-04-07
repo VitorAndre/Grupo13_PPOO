@@ -1,4 +1,3 @@
-package simulacao;
 /**
  * Representa um mapa com todos os itens que participam da simulacao
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
@@ -74,5 +73,9 @@ public class Mapa {
     public int getAltura() {
         return altura;
     }
-    
+
+    public Cidade[][] getCidades() {
+        return cidades;
+    }
+
 }

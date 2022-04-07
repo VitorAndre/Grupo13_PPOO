@@ -1,15 +1,11 @@
-package simulacao;
-
+import java.util.ArrayList;
 import java.util.Random;
 /**
  * Responsavel pela simulacao.
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class Simulacao {
-    private Veiculo veiculo1;
-    private Veiculo veiculo2;
-    private Veiculo veiculo3;
-    private Veiculo veiculo4;
+    private ArrayList<Veiculo> veiculos;
     private Cidade cancun;
     private Cidade madagascar;
     private Cidade novaYork;
@@ -21,109 +17,134 @@ public class Simulacao {
     private Obstaculo bancoDeareia;
     private JanelaSimulacao janelaSimulacao;
     private Mapa mapa;
-    
+    private int alturas[];
+    private int larguras[];
+
     public Simulacao() {
-        Random rand = new Random(12345);
         mapa = new Mapa();
         int largura = mapa.getLargura();
         int altura = mapa.getAltura();
-        veiculo1 = new Veiculo(new Localizacao(1,10), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
-        veiculo1.setLocalizacaoDestino(new Localizacao(22,10));//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(veiculo1);
-        veiculo2 = new Veiculo(new Localizacao(20,10), "Imagens/veiculo.jpg");
-        veiculo2.setLocalizacaoDestino(new Localizacao(25,15));
-        mapa.adicionarItem(veiculo2);
-        veiculo3 = new Veiculo(new Localizacao(10,1), "Imagens/veiculo.jpg");
-        veiculo3.setLocalizacaoDestino(new Localizacao(8,27));
-        mapa.adicionarItem(veiculo3);
-        veiculo4 = new Veiculo(new Localizacao(1,30), "Imagens/veiculo.jpg");
-        veiculo4.setLocalizacaoDestino(new Localizacao(18,30));
-        mapa.adicionarItem(veiculo4);
-        //Adiciona as cidades ao mapa
-        cancun = new Cidade(new Localizacao(7,10), "Imagens/cancun.jpg", "Cancun");
-        mapa.adicionarCidade(cancun);
-        madagascar = new Cidade(new Localizacao(33,24), "Imagens/madagascar.jpg", "Madagascar");
-        mapa.adicionarCidade(madagascar);
-        novaYork = new Cidade(new Localizacao(4,4), "Imagens/NY.png", "Nova York");
-        mapa.adicionarCidade(novaYork);
-        paris = new Cidade(new Localizacao(28,2), "Imagens/Paris.png", "Paris");
-        mapa.adicionarCidade(paris);
-        portugal = new Cidade(new Localizacao(25,4), "Imagens/portugal.png", "Lisboa");
-        mapa.adicionarCidade(portugal);
-        rioDeJaneiro = new Cidade(new Localizacao(12,22), "Imagens/RJ.png", "Rio de Janeiro");
-        mapa.adicionarCidade(rioDeJaneiro);
-        buenosAires = new Cidade(new Localizacao(8,30), "Imagens/Buenos.png", "Buenos Aires");
-        mapa.adicionarCidade(buenosAires);
-        africa = new Cidade(new Localizacao(20,15), "Imagens/africa.png", "Africa");
-        mapa.adicionarCidade(africa);
-        //Adiciona os bancos de areia
-        bancoDeareia = new Obstaculo(new Localizacao(15,30), "Imagens/areia.png");
-        mapa.adicionarObstaculo(bancoDeareia);
+        alturas = new int[8];
+        larguras = new int[8];
+        veiculos  = new ArrayList<>();
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
     
     public void executarSimulacao(int numPassos){
-        janelaSimulacao.executarAcao();
-        for (int i = 0; i < numPassos; i++) {
-            executarUmPasso();
-            esperar(300);
-        }        
+        // for (int i = 0; i < 100; i++) {      
+            adicionarCidades();
+            adicionarVeiculos();
+            adicionarObstaculos();
+            //Adiciona os bancos de areia
+            janelaSimulacao.executarAcao();
+            for (int j = 0; j < numPassos; j++) {
+                executarUmPasso();
+                esperar(300);
+            }
+            mapa = new Mapa();
+        // }
+        //Aqui abriria uma janela com os resultados //todo: ver de fazer isso qnd fechar     
+        System.out.println("cabo");       
+    }
+
+    private void adicionarVeiculos() {
+        Veiculo veiculo;
+        for (int i = 0; i < 4; i++) {
+            Random rand = new Random();
+            int r = rand.nextInt(8);
+            veiculo = new Veiculo(new Localizacao(alturas[r], larguras[r] - 1), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
+            r = rand.nextInt(8);
+            veiculo.setLocalizacaoDestino(new Localizacao(alturas[r], larguras[r] - 1));//Define a posicao destino aleatoriamente
+            veiculos.add(veiculo);
+            mapa.adicionarItem(veiculo);
+        }
+    }
+
+    private void adicionarCidades() {
+        //Adiciona as cidades ao mapa
+        cancun = new Cidade(new Localizacao(7,10), "Imagens/cancun.jpg", "Cancun");
+        alturas[0] = 7;
+        larguras[0] = 10;
+        mapa.adicionarCidade(cancun);
+        
+        madagascar = new Cidade(new Localizacao(33,24), "Imagens/madagascar.jpg", "Madagascar");
+        alturas[1] = 33;
+        larguras[1] = 24;
+        mapa.adicionarCidade(madagascar);
+        
+        africa = new Cidade(new Localizacao(20,15), "Imagens/africa.png", "Africa");
+        alturas[2] = 20;
+        larguras[2] = 15;
+        mapa.adicionarCidade(africa);
+
+        novaYork = new Cidade(new Localizacao(4,4), "Imagens/NY.png", "Nova York");
+        alturas[3] = 4;
+        larguras[3] = 4;
+        mapa.adicionarCidade(novaYork);
+        
+        paris = new Cidade(new Localizacao(28,2), "Imagens/Paris.png", "Paris");
+        alturas[4] = 28;
+        larguras[4] = 2;
+        mapa.adicionarCidade(paris);
+        
+        portugal = new Cidade(new Localizacao(25,4), "Imagens/portugal.png", "Lisboa");
+        alturas[5] = 25;
+        larguras[5] = 4;
+        mapa.adicionarCidade(portugal);
+        
+        rioDeJaneiro = new Cidade(new Localizacao(12,22), "Imagens/RJ.png", "Rio de Janeiro");
+        alturas[6] = 12;
+        larguras[6] = 22;
+        mapa.adicionarCidade(rioDeJaneiro);
+        
+        buenosAires = new Cidade(new Localizacao(8,30), "Imagens/Buenos.png", "Buenos Aires");
+        alturas[7] = 8;
+        larguras[7] = 30;
+        mapa.adicionarCidade(buenosAires);
+    }
+
+    private void adicionarObstaculos() {
+        bancoDeareia = new Obstaculo(new Localizacao(8, 25), "Imagens/areia.png");
+        mapa.adicionarObstaculo(bancoDeareia);
+
+        bancoDeareia = new Obstaculo(new Localizacao(14, 5), "Imagens/areia.png");
+        mapa.adicionarObstaculo(bancoDeareia);
+
+        bancoDeareia = new Obstaculo(new Localizacao(10, 20), "Imagens/areia.png");
+        mapa.adicionarObstaculo(bancoDeareia);
+
+        bancoDeareia = new Obstaculo(new Localizacao(18, 29), "Imagens/areia.png");
+        mapa.adicionarObstaculo(bancoDeareia);
+
+        bancoDeareia = new Obstaculo(new Localizacao(30, 07), "Imagens/areia.png");
+        mapa.adicionarObstaculo(bancoDeareia);
+
+        bancoDeareia = new Obstaculo(new Localizacao(18, 18), "Imagens/areia.png");
+        mapa.adicionarObstaculo(bancoDeareia);
     }
 
     private void executarUmPasso() {
-        
-        Localizacao proxLocalizacao = veiculo1.getLocalizacaoAtual().proximaLocalizacao(veiculo1.getLocalizacaoDestino());
+        Localizacao proxLocalizacao;
         Localizacao novaLocalizacao = null;
-        System.out.println(veiculo1.getLocalizacaoAtual());
-        if(mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null){
-            mapa.removerItem(veiculo1);
-            mapa.adicionarItem(veiculo1);
-            veiculo1.executarAcao();
-            
-        } else {
-            novaLocalizacao = new Localizacao(veiculo1.getLocalizacaoAtual().getX()+1, veiculo1.getLocalizacaoAtual().getY()+1);
-            veiculo1.setLocalizacaoAtual(novaLocalizacao);
-            veiculo1.setLocalizacaoAtual(novaLocalizacao);
-        }
+        for (int i = 0; i < 4; i++) {            
+            proxLocalizacao = veiculos.get(i).getLocalizacaoAtual().proximaLocalizacao(veiculos.get(i).getLocalizacaoDestino());        
+            System.out.println(veiculos.get(i).getLocalizacaoAtual());
+            if(
+                mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
+                mapa.getCidade(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
+                mapa.getItem(proxLocalizacao.getX(), proxLocalizacao.getY()) == null            
+            ){
+                mapa.removerItem(veiculos.get(i));
+                mapa.adicionarItem(veiculos.get(i));
+                veiculos.get(i).executarAcao();
+                
+            } else {
 
-        System.out.println(veiculo2.getLocalizacaoAtual());
-        proxLocalizacao = veiculo2.getLocalizacaoAtual().proximaLocalizacao(veiculo2.getLocalizacaoDestino());        
-        if(mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null){
-            mapa.removerItem(veiculo2);
-            mapa.adicionarItem(veiculo2);
-            veiculo2.executarAcao();
-            
-        } else {
-            novaLocalizacao = new Localizacao(veiculo2.getLocalizacaoAtual().getX()+1, veiculo1.getLocalizacaoAtual().getY()-1);
-            veiculo2.setLocalizacaoAtual(novaLocalizacao);
-            veiculo2.setLocalizacaoAtual(novaLocalizacao);
+                novaLocalizacao = new Localizacao(veiculos.get(i).getLocalizacaoAtual().getX() - 1, veiculos.get(i).getLocalizacaoAtual().getY()+1);
+                veiculos.get(i).setLocalizacaoAtual(novaLocalizacao);
+                veiculos.get(i).setLocalizacaoAtual(novaLocalizacao);
+            }
         }
-
-        System.out.println(veiculo3.getLocalizacaoAtual());
-        proxLocalizacao = veiculo3.getLocalizacaoAtual().proximaLocalizacao(veiculo3.getLocalizacaoDestino());
-        if(mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null){
-            mapa.removerItem(veiculo3);
-            mapa.adicionarItem(veiculo3);
-            veiculo3.executarAcao();
-            
-        } else {
-            novaLocalizacao = new Localizacao(veiculo3.getLocalizacaoAtual().getX()-1, veiculo3.getLocalizacaoAtual().getY()+1);
-            veiculo3.setLocalizacaoAtual(novaLocalizacao);
-            veiculo3.setLocalizacaoAtual(novaLocalizacao);
-        }
-
-        System.out.println(veiculo4.getLocalizacaoAtual());
-        proxLocalizacao = veiculo4.getLocalizacaoAtual().proximaLocalizacao(veiculo4.getLocalizacaoDestino());
-        if(mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null){
-            mapa.removerItem(veiculo4);
-            mapa.adicionarItem(veiculo4);
-            veiculo4.executarAcao();
-            
-        } else {
-            novaLocalizacao = new Localizacao(veiculo4.getLocalizacaoAtual().getX()-1, veiculo4.getLocalizacaoAtual().getY()-1);
-            veiculo4.setLocalizacaoAtual(novaLocalizacao);
-        }
-             
         janelaSimulacao.executarAcao();
     }
     
@@ -135,4 +156,8 @@ public class Simulacao {
         }
     }
     
+    private Localizacao setLocalizacaoDestinoQuandoConflita(Veiculo v, Localizacao proxLocalizacao) {
+        int x, y;
+        return new Localizacao(v.getLocalizacaoAtual().getX() - 1, v.getLocalizacaoAtual().getY()+1);
+    }
 }
