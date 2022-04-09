@@ -20,8 +20,19 @@ public class Simulacao {
     private int alturas[];
     private int larguras[];
 
-    //TODO: RODAR VÁRIAS VEZES
+    //TODO: verificar se x / y não são -1
+/*  Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 35
+        at Mapa.adicionarItem(Mapa.java:43)
+        at Simulacao.executarUmPasso(Simulacao.java:162)
+        at Simulacao.executarSimulacao(Simulacao.java:47)
+        at Principal.main(Principal.java:9) */
+
+    //TODO: RODAR VÁRIAS VEZES [X]
     //TODO: TESTAR
+    //TODO: TESTAR - tem casos que o conflito continua
+    //todo: tem caso que não funciona a fuga do conflito []
+    //todo: ver de acabar qnd todos chegarem no destino []
+    //todo: resetar barquinhos [X]
     public Simulacao() {
         mapa = new Mapa();
         // int largura = mapa.getLargura();
@@ -35,11 +46,15 @@ public class Simulacao {
     public void executarSimulacao(int numPassos){
         adicionarCidades();
         adicionarObstaculos();
-        adicionarVeiculos();
-        janelaSimulacao.executarAcao();
-        for (int j = 0; j < numPassos; j++) {
-            executarUmPasso(j);
-            esperar(300);
+        for (int i = 0; i < 1000; i++) {
+            mapa.resetarItens();
+            adicionarVeiculos();
+            janelaSimulacao.executarAcao();
+            for (int j = 0; j < numPassos; j++) {
+                executarUmPasso();
+                esperar(0); //todo: ver esse tempo
+            }
+            System.out.println("oieeeeee " + i+1);
         }
         //Aqui abriria uma janela com os resultados //todo: ver de fazer isso qnd fechar     
         System.out.println("cabo");       
@@ -47,11 +62,12 @@ public class Simulacao {
 
     private void adicionarVeiculos() {
         Veiculo veiculo;
-        // veiculo = new Veiculo(new Localizacao(10, 20), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
-        // veiculos.add(veiculo);
-        // veiculo.setLocalizacaoDestino(new Localizacao(20, 20));//Define a posicao destino aleatoriamente
-        // mapa.adicionarItem(veiculo);
-        for (int i = 0; i < 4; i++) {
+        veiculos.clear();
+        veiculo = new Veiculo(new Localizacao(10, 20), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
+        veiculos.add(veiculo);
+        veiculo.setLocalizacaoDestino(new Localizacao(20, 20));//Define a posicao destino aleatoriamente
+        mapa.adicionarItem(veiculo);
+        for (int i = 0; i < 15; i++) {
             Random rand = new Random();
             int r = rand.nextInt(8);
             veiculo = new Veiculo(new Localizacao(alturas[r], larguras[r] - 1), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
@@ -60,10 +76,10 @@ public class Simulacao {
             veiculos.add(veiculo);
             mapa.adicionarItem(veiculo);
         }
-        // veiculo = new Veiculo(new Localizacao(20, 20), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
-        // veiculos.add(veiculo);
-        // veiculo.setLocalizacaoDestino(new Localizacao(10, 20));//Define a posicao destino aleatoriamente
-        // mapa.adicionarItem(veiculo);
+        veiculo = new Veiculo(new Localizacao(20, 20), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
+        veiculos.add(veiculo);
+        veiculo.setLocalizacaoDestino(new Localizacao(10, 20));//Define a posicao destino aleatoriamente
+        mapa.adicionarItem(veiculo);
     }
 
     private void adicionarCidades() {
@@ -129,10 +145,11 @@ public class Simulacao {
         mapa.adicionarObstaculo(bancoDeareia);
     }
 
-    private void executarUmPasso(int j) {
+
+    private void executarUmPasso() {
         Localizacao proxLocalizacao;
         ArrayList<Localizacao> destinos = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < veiculos.size(); i++) {
             proxLocalizacao = veiculos.get(i).getLocalizacaoAtual().proximaLocalizacao(veiculos.get(i).getLocalizacaoDestino());        
             if(mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
                 mapa.getCidade(proxLocalizacao.getX(), proxLocalizacao.getY()) == null) {
@@ -151,7 +168,15 @@ public class Simulacao {
                     proxLocalizacao = new Localizacao(veiculos.get(i).getLocalizacaoAtual().getX() - 1, veiculos.get(i).getLocalizacaoAtual().getY() - 1);
                     mapa.removerItem(veiculos.get(i));
                     veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
-                    mapa.adicionarItem(veiculos.get(i));
+                    // System.out.println(proxLocalizacao.getX());
+                    // System.out.println(proxLocalizacao.getY());
+                    try {
+                        mapa.adicionarItem(veiculos.get(i));
+                    } catch (Exception e) {
+                        System.out.println(proxLocalizacao.getX());
+                        System.out.println(proxLocalizacao.getY());
+                        //TODO: handle exception
+                    }
                 }
             }
             destinos.add(proxLocalizacao);

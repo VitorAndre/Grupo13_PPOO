@@ -47,6 +47,11 @@ public class Mapa {
         itens[v.getLocalizacaoAtual().getX()][v.getLocalizacaoAtual().getY()] = null;
     }
     
+    public void resetarItens() {
+        itens = null;
+        itens = new Veiculo[altura][largura];
+    }
+
     public void atualizarMapa(Veiculo v, Cidade c, Obstaculo o){
         removerItem(v);
         adicionarItem(v);
