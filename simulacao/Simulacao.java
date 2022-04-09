@@ -20,10 +20,12 @@ public class Simulacao {
     private int alturas[];
     private int larguras[];
 
+    //TODO: RODAR VÁRIAS VEZES
+    //TODO: TESTAR
     public Simulacao() {
         mapa = new Mapa();
-        int largura = mapa.getLargura();
-        int altura = mapa.getAltura();
+        // int largura = mapa.getLargura();
+        // int altura = mapa.getAltura();
         alturas = new int[8];
         larguras = new int[8];
         veiculos  = new ArrayList<>();
@@ -31,24 +33,24 @@ public class Simulacao {
     }
     
     public void executarSimulacao(int numPassos){
-        // for (int i = 0; i < 100; i++) {      
-            adicionarCidades();
-            adicionarVeiculos();
-            adicionarObstaculos();
-            //Adiciona os bancos de areia
-            janelaSimulacao.executarAcao();
-            for (int j = 0; j < numPassos; j++) {
-                executarUmPasso();
-                esperar(300);
-            }
-            mapa = new Mapa();
-        // }
+        adicionarCidades();
+        adicionarObstaculos();
+        adicionarVeiculos();
+        janelaSimulacao.executarAcao();
+        for (int j = 0; j < numPassos; j++) {
+            executarUmPasso(j);
+            esperar(300);
+        }
         //Aqui abriria uma janela com os resultados //todo: ver de fazer isso qnd fechar     
         System.out.println("cabo");       
     }
 
     private void adicionarVeiculos() {
         Veiculo veiculo;
+        // veiculo = new Veiculo(new Localizacao(10, 20), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
+        // veiculos.add(veiculo);
+        // veiculo.setLocalizacaoDestino(new Localizacao(20, 20));//Define a posicao destino aleatoriamente
+        // mapa.adicionarItem(veiculo);
         for (int i = 0; i < 4; i++) {
             Random rand = new Random();
             int r = rand.nextInt(8);
@@ -58,6 +60,10 @@ public class Simulacao {
             veiculos.add(veiculo);
             mapa.adicionarItem(veiculo);
         }
+        // veiculo = new Veiculo(new Localizacao(20, 20), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
+        // veiculos.add(veiculo);
+        // veiculo.setLocalizacaoDestino(new Localizacao(10, 20));//Define a posicao destino aleatoriamente
+        // mapa.adicionarItem(veiculo);
     }
 
     private void adicionarCidades() {
@@ -123,27 +129,32 @@ public class Simulacao {
         mapa.adicionarObstaculo(bancoDeareia);
     }
 
-    private void executarUmPasso() {
+    private void executarUmPasso(int j) {
         Localizacao proxLocalizacao;
-        Localizacao novaLocalizacao = null;
-        for (int i = 0; i < 4; i++) {            
+        ArrayList<Localizacao> destinos = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
             proxLocalizacao = veiculos.get(i).getLocalizacaoAtual().proximaLocalizacao(veiculos.get(i).getLocalizacaoDestino());        
-            System.out.println(veiculos.get(i).getLocalizacaoAtual());
-            if(
-                mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
-                mapa.getCidade(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
-                mapa.getItem(proxLocalizacao.getX(), proxLocalizacao.getY()) == null            
-            ){
+            if(mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
+                mapa.getCidade(proxLocalizacao.getX(), proxLocalizacao.getY()) == null) {
                 mapa.removerItem(veiculos.get(i));
                 mapa.adicionarItem(veiculos.get(i));
                 veiculos.get(i).executarAcao();
                 
             } else {
-
-                novaLocalizacao = new Localizacao(veiculos.get(i).getLocalizacaoAtual().getX() - 1, veiculos.get(i).getLocalizacaoAtual().getY()+1);
-                veiculos.get(i).setLocalizacaoAtual(novaLocalizacao);
-                veiculos.get(i).setLocalizacaoAtual(novaLocalizacao);
+                proxLocalizacao = new Localizacao(veiculos.get(i).getLocalizacaoAtual().getX() - 1, veiculos.get(i).getLocalizacaoAtual().getY() - 1);
+                mapa.removerItem(veiculos.get(i));
+                mapa.adicionarItem(veiculos.get(i));
+                veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
             }
+            for (Localizacao l : destinos) {                
+                if (proxLocalizacao.equals(l) && !veiculos.get(i).getLocalizacaoDestino().equals(l)) {
+                    proxLocalizacao = new Localizacao(veiculos.get(i).getLocalizacaoAtual().getX() - 1, veiculos.get(i).getLocalizacaoAtual().getY() - 1);
+                    mapa.removerItem(veiculos.get(i));
+                    veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
+                    mapa.adicionarItem(veiculos.get(i));
+                }
+            }
+            destinos.add(proxLocalizacao);
         }
         janelaSimulacao.executarAcao();
     }
@@ -156,8 +167,8 @@ public class Simulacao {
         }
     }
     
-    private Localizacao setLocalizacaoDestinoQuandoConflita(Veiculo v, Localizacao proxLocalizacao) {
-        int x, y;
-        return new Localizacao(v.getLocalizacaoAtual().getX() - 1, v.getLocalizacaoAtual().getY()+1);
-    }
+    // private Localizacao setLocalizacaoDestinoQuandoConflita(Veiculo v, Localizacao proxLocalizacao) {
+    //     int x, y;
+    //     return new Localizacao(v.getLocalizacaoAtual().getX() - 1, v.getLocalizacaoAtual().getY()+1);
+    // }
 }
