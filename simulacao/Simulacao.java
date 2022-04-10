@@ -20,19 +20,6 @@ public class Simulacao {
     private int alturas[];
     private int larguras[];
 
-    //TODO: verificar se x / y não são -1
-/*  Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 35
-        at Mapa.adicionarItem(Mapa.java:43)
-        at Simulacao.executarUmPasso(Simulacao.java:162)
-        at Simulacao.executarSimulacao(Simulacao.java:47)
-        at Principal.main(Principal.java:9) */
-
-    //TODO: RODAR VÁRIAS VEZES [X]
-    //TODO: TESTAR
-    //TODO: TESTAR - tem casos que o conflito continua
-    //todo: tem caso que não funciona a fuga do conflito []
-    //todo: ver de acabar qnd todos chegarem no destino []
-    //todo: resetar barquinhos [X]
     public Simulacao() {
         mapa = new Mapa();
         // int largura = mapa.getLargura();
@@ -43,43 +30,51 @@ public class Simulacao {
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
     
-    public void executarSimulacao(int numPassos){
+    public void executarSimulacao(int numPassos, int numVeiculos, int numIteracoes){
         adicionarCidades();
         adicionarObstaculos();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < numIteracoes; i++) {
             mapa.resetarItens();
-            adicionarVeiculos();
+            adicionarVeiculos(numVeiculos);
             janelaSimulacao.executarAcao();
             for (int j = 0; j < numPassos; j++) {
                 executarUmPasso();
-                esperar(0); //todo: ver esse tempo
+                esperar(100); //todo: ver esse tempo
+                if (todosChegaramAoDestino()) { //Caso todos os veiculos acabem seus caminhos, uma nova iteração pode se iniciar
+                    esperar(100);
+                    j = numPassos;
+                }
             }
-            System.out.println("oieeeeee " + i+1);
         }
         //Aqui abriria uma janela com os resultados //todo: ver de fazer isso qnd fechar     
         System.out.println("cabo");       
     }
 
-    private void adicionarVeiculos() {
+    private boolean todosChegaramAoDestino() {
+        for (Veiculo veiculo : veiculos) {
+            if (veiculo.getLocalizacaoDestino() != veiculo.getLocalizacaoAtual()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void adicionarVeiculos(int qtdVeiculos) {
         Veiculo veiculo;
         veiculos.clear();
-        veiculo = new Veiculo(new Localizacao(10, 20), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
-        veiculos.add(veiculo);
-        veiculo.setLocalizacaoDestino(new Localizacao(20, 20));//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(veiculo);
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < qtdVeiculos; i++) {
             Random rand = new Random();
-            int r = rand.nextInt(8);
-            veiculo = new Veiculo(new Localizacao(alturas[r], larguras[r] - 1), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
-            r = rand.nextInt(8);
-            veiculo.setLocalizacaoDestino(new Localizacao(alturas[r], larguras[r] - 1));//Define a posicao destino aleatoriamente
+            int inicio = rand.nextInt(8);
+            //O larguras[r] -1 representa que os navios vão ficar acima da cidade
+            veiculo = new Veiculo(new Localizacao(alturas[inicio], larguras[inicio] - 1), "Imagens/veiculo.jpg");//Cria um veiculo em uma cidade aleatoria
+            int destino = rand.nextInt(8);
+            while (destino == inicio) { //garante que inicio e destino não sejam iguais
+                destino = rand.nextInt(8);
+            }
+            veiculo.setLocalizacaoDestino(new Localizacao(alturas[destino], larguras[destino] - 1));//Define a cidade destino aleatoriamente
             veiculos.add(veiculo);
             mapa.adicionarItem(veiculo);
         }
-        veiculo = new Veiculo(new Localizacao(20, 20), "Imagens/veiculo.jpg");//Cria um veiculo em uma posicao aleatoria
-        veiculos.add(veiculo);
-        veiculo.setLocalizacaoDestino(new Localizacao(10, 20));//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(veiculo);
     }
 
     private void adicionarCidades() {
@@ -151,35 +146,29 @@ public class Simulacao {
         ArrayList<Localizacao> destinos = new ArrayList<>();
         for (int i = 0; i < veiculos.size(); i++) {
             proxLocalizacao = veiculos.get(i).getLocalizacaoAtual().proximaLocalizacao(veiculos.get(i).getLocalizacaoDestino());        
-            if(mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
+            
+            //verifica se não há um navio indo para o mesmo local
+            for (Localizacao l : destinos) {
+                if (proxLocalizacao.equals(l) && !veiculos.get(i).getLocalizacaoDestino().equals(l)) {
+                    proxLocalizacao = localizacaoDestinoQuandoConflita(veiculos.get(i));
+                    mapa.removerItem(veiculos.get(i));
+                    veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
+                    mapa.adicionarItem(veiculos.get(i));
+                }
+            }
+            destinos.add(veiculos.get(i).getLocalizacaoAtual());
+            destinos.add(proxLocalizacao);
+            if (mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
                 mapa.getCidade(proxLocalizacao.getX(), proxLocalizacao.getY()) == null) {
                 mapa.removerItem(veiculos.get(i));
                 mapa.adicionarItem(veiculos.get(i));
                 veiculos.get(i).executarAcao();
-                
             } else {
-                proxLocalizacao = new Localizacao(veiculos.get(i).getLocalizacaoAtual().getX() - 1, veiculos.get(i).getLocalizacaoAtual().getY() - 1);
+                proxLocalizacao = localizacaoDestinoQuandoConflita(veiculos.get(i));
                 mapa.removerItem(veiculos.get(i));
                 mapa.adicionarItem(veiculos.get(i));
                 veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
             }
-            for (Localizacao l : destinos) {                
-                if (proxLocalizacao.equals(l) && !veiculos.get(i).getLocalizacaoDestino().equals(l)) {
-                    proxLocalizacao = new Localizacao(veiculos.get(i).getLocalizacaoAtual().getX() - 1, veiculos.get(i).getLocalizacaoAtual().getY() - 1);
-                    mapa.removerItem(veiculos.get(i));
-                    veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
-                    // System.out.println(proxLocalizacao.getX());
-                    // System.out.println(proxLocalizacao.getY());
-                    try {
-                        mapa.adicionarItem(veiculos.get(i));
-                    } catch (Exception e) {
-                        System.out.println(proxLocalizacao.getX());
-                        System.out.println(proxLocalizacao.getY());
-                        //TODO: handle exception
-                    }
-                }
-            }
-            destinos.add(proxLocalizacao);
         }
         janelaSimulacao.executarAcao();
     }
@@ -192,8 +181,19 @@ public class Simulacao {
         }
     }
     
-    // private Localizacao setLocalizacaoDestinoQuandoConflita(Veiculo v, Localizacao proxLocalizacao) {
-    //     int x, y;
-    //     return new Localizacao(v.getLocalizacaoAtual().getX() - 1, v.getLocalizacaoAtual().getY()+1);
-    // }
+    private Localizacao localizacaoDestinoQuandoConflita(Veiculo v) {
+        if (v.getLocalizacaoAtual().getX() == v.getLocalizacaoDestino().getX()) {
+            if (v.getLocalizacaoAtual().getY() > v.getLocalizacaoDestino().getY()) {
+                return new Localizacao(v.getLocalizacaoAtual().getX() + 1, v.getLocalizacaoAtual().getY() - 1);
+            } else {
+                return new Localizacao(v.getLocalizacaoAtual().getX() + 1, v.getLocalizacaoAtual().getY() + 1);
+            }
+        } else {
+            if (v.getLocalizacaoAtual().getX() > v.getLocalizacaoDestino().getX()) {
+                return new Localizacao(v.getLocalizacaoAtual().getX() - 1, v.getLocalizacaoAtual().getY() + 1);
+            } else {
+                return new Localizacao(v.getLocalizacaoAtual().getX() + 1, v.getLocalizacaoAtual().getY() + 1);
+            }
+        }
+    }
 }
