@@ -1,5 +1,3 @@
-
-
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -23,4 +21,5 @@ public class Obstaculo {
     public Image getImagem(){
         return imagem;
     }
+    
 }
