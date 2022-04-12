@@ -14,7 +14,6 @@ public class Simulacao {
     private Obstaculo bancoDeareia;    
     //private Viagem viagem;
     private GerenciadoraViagem gerenciadora;
-    private int quantidadeVeiculos;
     private Random rand;
 
     public Simulacao() {
@@ -28,30 +27,28 @@ public class Simulacao {
         cidades = new ArrayList<Cidade>();
         veiculos = new ArrayList<Veiculo>();
         gerenciadora = new GerenciadoraViagem();
-        quantidadeVeiculos = 4;
 
 
         // ADICIONAR CIDADES E OBSTACULOS
         adicionarCidades();
         adicionarObstaculos();
-        adicionarVeiculos();
 
         janelaSimulacao = new JanelaSimulacao(mapa);       
 
     }
     
-    public void executarSimulacao(int numPassos){        
+    public void executarSimulacao(int numPassos, int quantidadeVeiculos, int tempoDeEspera){        
         adicionarCidades();
         adicionarObstaculos();
         for (int i = 0; i < 10; i++) {
             mapa.resetarItens();
-            adicionarVeiculos();
+            adicionarVeiculos(quantidadeVeiculos);
             janelaSimulacao.executarAcao();
             for (int j = 0; j < numPassos; j++) {
                 executarUmPasso();
-                esperar(100); //todo: ver esse tempo
+                esperar(tempoDeEspera);
                 if (todosChegaramAoDestino()) { //Caso todos os veiculos acabem seus caminhos, uma nova iteração pode se iniciar
-                    esperar(100);
+                    esperar(tempoDeEspera);
                     j = numPassos;
                 }
             }
@@ -73,7 +70,6 @@ public class Simulacao {
         ArrayList<Localizacao> destinos = new ArrayList<>();
         for (int i = 0; i < veiculos.size(); i++) {
             proxLocalizacao = veiculos.get(i).getLocalizacaoAtual().proximaLocalizacao(veiculos.get(i).getLocalizacaoDestino());        
-            
             //verifica se não há um navio indo para o mesmo local
             for (Localizacao l : destinos) {
                 if (proxLocalizacao.equals(l) && !veiculos.get(i).getLocalizacaoDestino().equals(l)) {
@@ -177,7 +173,7 @@ public class Simulacao {
         gerenciadora.adicionarViagem(viagem);
     }
 
-    private void adicionarVeiculos() {
+    private void adicionarVeiculos(int quantidadeVeiculos) {
         veiculos.clear();
         // ADICIONAR VEICULO, passa como parametro cidade de origem e destino dese veiculo 
         for(int i = 0; i < quantidadeVeiculos; i++){
