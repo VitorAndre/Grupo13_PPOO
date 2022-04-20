@@ -47,57 +47,16 @@ public class Simulacao {
             for (int j = 0; j < numPassos; j++) {
                 executarUmPasso();
                 esperar(tempoDeEspera);
-                if (todosChegaramAoDestino()) { //Caso todos os veiculos acabem seus caminhos, uma nova iteração pode se iniciar
-                    esperar(tempoDeEspera);
-                    j = numPassos;
-                }
             }
         }
         gerenciadora.imprimirRelatorio();       
     }
 
-    private boolean todosChegaramAoDestino() {
-        for (Veiculo veiculo : veiculos) {
-            if (veiculo.getLocalizacaoDestino() != veiculo.getLocalizacaoAtual()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private void executarUmPasso() {
-        Localizacao proxLocalizacao;
-        ArrayList<Localizacao> destinos = new ArrayList<>();
         for (int i = 0; i < veiculos.size(); i++) {
-            proxLocalizacao = veiculos.get(i).getLocalizacaoAtual().proximaLocalizacao(veiculos.get(i).getLocalizacaoDestino());        
-            //verifica se não há um navio indo para o mesmo local
-            for (Localizacao l : destinos) {
-                if (proxLocalizacao.equals(l) && !veiculos.get(i).getLocalizacaoDestino().equals(l)) {
-                    proxLocalizacao = localizacaoDestinoQuandoConflita(veiculos.get(i));
-                    mapa.removerItem(veiculos.get(i));
-                    veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
-                    mapa.adicionarItem(veiculos.get(i));
-                }
-            }
-            destinos.add(veiculos.get(i).getLocalizacaoAtual());
-            destinos.add(proxLocalizacao);
-
-            //Verifica se o navio chegou na cidade destino
-            if(veiculos.get(i).getLocalizacaoAtual() != veiculos.get(i).getLocalizacaoDestino()){
-                //Verifica se a próxima posição é nula para modificar o mapa
-                if (mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
-                    mapa.getCidade(proxLocalizacao.getX(), proxLocalizacao.getY()) == null){
-                    mapa.removerItem(veiculos.get(i));
-                    veiculos.get(i).executarAcao();
-                    mapa.adicionarItem(veiculos.get(i));
-                //Altera a localização do veiculo no mapa para evitar o conflito
-                } else {
-                    proxLocalizacao = localizacaoDestinoQuandoConflita(veiculos.get(i));
-                    mapa.removerItem(veiculos.get(i));
-                    veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
-                    mapa.adicionarItem(veiculos.get(i));
-                }
-            }
+            mapa.removerItem(veiculos.get(i));
+            veiculos.get(i).executarAcao();
+            mapa.adicionarItem(veiculos.get(i));
         }
         janelaSimulacao.executarAcao();
     }
@@ -168,7 +127,7 @@ public class Simulacao {
     private void adicionarVeiculo(Cidade cidadeOrigem, Cidade cidadeDestino) {
         Veiculo veiculo;        
         
-        veiculo = new Veiculo(new Localizacao(cidadeOrigem.getLocalizacaoAtual().getX() -1,cidadeOrigem.getLocalizacaoAtual().getY()));//Cria um veiculo em uma posicao 
+        veiculo = new Veiculo(new Localizacao(cidadeOrigem.getLocalizacaoAtual().getX() -1,cidadeOrigem.getLocalizacaoAtual().getY()), mapa);//Cria um veiculo em uma posicao 
         veiculo.setLocalizacaoDestino(new Localizacao(cidadeDestino.getLocalizacaoAtual().getX() -1,cidadeDestino.getLocalizacaoAtual().getY()));//Define a posicao destino 
         mapa.adicionarItem(veiculo);//Inicializando o mapa com o veículo
         
@@ -176,8 +135,8 @@ public class Simulacao {
         // Criando uma viagem para cada veiculo
         // É escolhido um número aleatório entre 500 e 5000 para representar a quantidade de passageiros do navio
         // É escolhido um número aleatório entre 80 e 480 para representar o preço da passagem
-        int numeroDePassageiros = rand.nextInt(500,5000);
-        double valorPassagem = rand.nextDouble(80,480);
+        int numeroDePassageiros = rand.nextInt(5000) + 500;
+        double valorPassagem = 80 + (rand.nextDouble() * (480 - 80));
         Viagem viagem = new Viagem( veiculo, cidadeOrigem.getNome(), cidadeDestino.getNome(), numeroDePassageiros, valorPassagem, veiculo.getDistanciaPercorrida() );  
         gerenciadora.adicionarViagem(viagem);
     }
@@ -194,22 +153,6 @@ public class Simulacao {
             Cidade cidadeOrigem = cidades.get(indiceOrigem);
             Cidade cidadeDestino = cidades.get(indiceDestino);
             adicionarVeiculo(cidadeOrigem, cidadeDestino);              
-        }
-    }
-
-    private Localizacao localizacaoDestinoQuandoConflita(Veiculo v) {
-        if (v.getLocalizacaoAtual().getX() == v.getLocalizacaoDestino().getX()) {
-            if (v.getLocalizacaoAtual().getY() > v.getLocalizacaoDestino().getY()) {
-                return new Localizacao(v.getLocalizacaoAtual().getX() + 1, v.getLocalizacaoAtual().getY() - 1);
-            } else {
-                return new Localizacao(v.getLocalizacaoAtual().getX() + 1, v.getLocalizacaoAtual().getY() + 1);
-            }
-        } else {
-            if (v.getLocalizacaoAtual().getX() > v.getLocalizacaoDestino().getX()) {
-                return new Localizacao(v.getLocalizacaoAtual().getX() - 1, v.getLocalizacaoAtual().getY() + 1);
-            } else {
-                return new Localizacao(v.getLocalizacaoAtual().getX() + 1, v.getLocalizacaoAtual().getY() + 1);
-            }
         }
     }
     
