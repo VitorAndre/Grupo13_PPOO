@@ -81,16 +81,22 @@ public class Simulacao {
             }
             destinos.add(veiculos.get(i).getLocalizacaoAtual());
             destinos.add(proxLocalizacao);
-            if (mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
-                mapa.getCidade(proxLocalizacao.getX(), proxLocalizacao.getY()) == null) {
-                mapa.removerItem(veiculos.get(i));
-                mapa.adicionarItem(veiculos.get(i));
-                veiculos.get(i).executarAcao();
-            } else {
-                proxLocalizacao = localizacaoDestinoQuandoConflita(veiculos.get(i));
-                mapa.removerItem(veiculos.get(i));
-                mapa.adicionarItem(veiculos.get(i));
-                veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
+
+            //Verifica se o navio chegou na cidade destino
+            if(veiculos.get(i).getLocalizacaoAtual() != veiculos.get(i).getLocalizacaoDestino()){
+                //Verifica se a próxima posição é nula para modificar o mapa
+                if (mapa.getObstaculo(proxLocalizacao.getX(), proxLocalizacao.getY()) == null &&
+                    mapa.getCidade(proxLocalizacao.getX(), proxLocalizacao.getY()) == null){
+                    mapa.removerItem(veiculos.get(i));
+                    veiculos.get(i).executarAcao();
+                    mapa.adicionarItem(veiculos.get(i));
+                //Altera a localização do veiculo no mapa para evitar o conflito
+                } else {
+                    proxLocalizacao = localizacaoDestinoQuandoConflita(veiculos.get(i));
+                    mapa.removerItem(veiculos.get(i));
+                    veiculos.get(i).setLocalizacaoAtual(proxLocalizacao);
+                    mapa.adicionarItem(veiculos.get(i));
+                }
             }
         }
         janelaSimulacao.executarAcao();
@@ -166,10 +172,13 @@ public class Simulacao {
         veiculo.setLocalizacaoDestino(new Localizacao(cidadeDestino.getLocalizacaoAtual().getX() -1,cidadeDestino.getLocalizacaoAtual().getY()));//Define a posicao destino 
         mapa.adicionarItem(veiculo);//Inicializando o mapa com o veículo
         
-        veiculos.add(veiculo); // -- Adiciona um veiculo no arraylist de veiculos
-
-        //criando uma viagem para cada veiculo
-        Viagem viagem = new Viagem( veiculo, cidadeOrigem.getNome(), cidadeDestino.getNome() );  
+        veiculos.add(veiculo); // Adiciona um veiculo no arraylist de veiculos
+        // Criando uma viagem para cada veiculo
+        // É escolhido um número aleatório entre 500 e 5000 para representar a quantidade de passageiros do navio
+        // É escolhido um número aleatório entre 80 e 480 para representar o preço da passagem
+        int numeroDePassageiros = rand.nextInt(500,5000);
+        double valorPassagem = rand.nextDouble(80,480);
+        Viagem viagem = new Viagem( veiculo, cidadeOrigem.getNome(), cidadeDestino.getNome(), numeroDePassageiros, valorPassagem, veiculo.getDistanciaPercorrida() );  
         gerenciadora.adicionarViagem(viagem);
     }
 
