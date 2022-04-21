@@ -104,7 +104,7 @@ public class JanelaSimulacao extends JFrame{
                     yScale = VIEW_SCALING_FACTOR;
                 }
             }
-            g.setColor(Color.white);
+            g.setColor(new Color(207, 224, 250));
             g.fillRect(0, 0, tamanho.width, tamanho.height);
             g.setColor(Color.gray);
             for(int i = 0, x = 0; x < tamanho.width; i++, x = i * xScale) {

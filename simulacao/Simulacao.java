@@ -38,17 +38,17 @@ public class Simulacao {
     }
     
     public void executarSimulacao(int numPassos, int quantidadeVeiculos, int tempoDeEspera){        
-        adicionarCidades();
-        adicionarObstaculos();
-        for (int i = 0; i < 10; i++) {
-            mapa.resetarItens();
-            adicionarVeiculos(quantidadeVeiculos);
+        //adicionarCidades();  APAGAR PQ EH REPETIDO
+        //adicionarObstaculos();  APAGAR PQ EH REPETIDO
+        //for (int i = 0; i < 10; i++) {
+            //mapa.resetarItens();
+           adicionarVeiculos(quantidadeVeiculos);
             janelaSimulacao.executarAcao();
             for (int j = 0; j < numPassos; j++) {
                 executarUmPasso();
                 esperar(tempoDeEspera);
             }
-        }
+        //}
         gerenciadora.imprimirRelatorio();       
     }
 
@@ -71,56 +71,56 @@ public class Simulacao {
     
     private void adicionarCidades() {   
         //0
-        Cidade cancun = new Cidade(new Localizacao(7,10), "Imagens/cancun.jpg", "Cancun");
+        Cidade cancun = new Cidade(new Localizacao(7,10), "Imagens/cancun.png", "Cancun(México)");
         mapa.adicionarCidade(cancun);
         cidades.add(cancun);
         //1
-        Cidade madagascar = new Cidade(new Localizacao(33,24), "Imagens/madagascar.jpg", "Madagascar");
+        Cidade madagascar = new Cidade(new Localizacao(33,24), "Imagens/madagascar.png", "Madagascar");
         mapa.adicionarCidade(madagascar);
         cidades.add(madagascar);
         //2
-        Cidade africa = new Cidade(new Localizacao(20,15), "Imagens/africa.png", "Africa");
+        Cidade africa = new Cidade(new Localizacao(20,15), "Imagens/africa.png", "Dacar(Senegal)");
         mapa.adicionarCidade(africa);
         cidades.add(africa);
         //3
-        Cidade novaYork = new Cidade(new Localizacao(4,4), "Imagens/NY.png", "Nova York");
+        Cidade novaYork = new Cidade(new Localizacao(4,4), "Imagens/NY.png", "Nova York(EUA)");
         mapa.adicionarCidade(novaYork);
         cidades.add(novaYork);
         //4
-        Cidade paris = new Cidade(new Localizacao(28,2), "Imagens/Paris.png", "Paris");
+        Cidade paris = new Cidade(new Localizacao(28,2), "Imagens/Paris.png", "Paris(França)");
         mapa.adicionarCidade(paris);
         cidades.add(paris);
         //5
-        Cidade portugal = new Cidade(new Localizacao(25,4), "Imagens/portugal.png", "Lisboa");
+        Cidade portugal = new Cidade(new Localizacao(25,4), "Imagens/portugal.png", "Lisboa(Portugal)");
         mapa.adicionarCidade(portugal);
         cidades.add(portugal);
         //6
-        Cidade rioDeJaneiro = new Cidade(new Localizacao(12,22), "Imagens/RJ.png", "Rio de Janeiro");
+        Cidade rioDeJaneiro = new Cidade(new Localizacao(12,22), "Imagens/RJ.png", "Rio de Janeiro(Brasil)");
         mapa.adicionarCidade(rioDeJaneiro);
         cidades.add(rioDeJaneiro);
         //7
-        Cidade buenosAires = new Cidade(new Localizacao(8,30), "Imagens/Buenos.png", "Buenos Aires");
+        Cidade buenosAires = new Cidade(new Localizacao(8,30), "Imagens/Buenos.png", "Buenos Aires(Argentina)");
         mapa.adicionarCidade(buenosAires);
         cidades.add(buenosAires); 
     }
 
     private void adicionarObstaculos() {
-        bancoDeareia = new Obstaculo(new Localizacao(8, 25), "Imagens/areia2.jpg");
+        bancoDeareia = new Obstaculo(new Localizacao(8, 25), "Imagens/areia2.png");
         mapa.adicionarObstaculo(bancoDeareia);
 
-        bancoDeareia = new Obstaculo(new Localizacao(14, 5), "Imagens/areia2.jpg");
+        bancoDeareia = new Obstaculo(new Localizacao(14, 5), "Imagens/areia2.png");
         mapa.adicionarObstaculo(bancoDeareia);
 
-        bancoDeareia = new Obstaculo(new Localizacao(10, 20), "Imagens/areia2.jpg");
+        bancoDeareia = new Obstaculo(new Localizacao(10, 20), "Imagens/areia2.png");
         mapa.adicionarObstaculo(bancoDeareia);
 
-        bancoDeareia = new Obstaculo(new Localizacao(18, 29), "Imagens/areia2.jpg");
+        bancoDeareia = new Obstaculo(new Localizacao(18, 29), "Imagens/areia2.png");
         mapa.adicionarObstaculo(bancoDeareia);
 
-        bancoDeareia = new Obstaculo(new Localizacao(30, 07), "Imagens/areia2.jpg");
+        bancoDeareia = new Obstaculo(new Localizacao(30, 07), "Imagens/areia2.png");
         mapa.adicionarObstaculo(bancoDeareia);
 
-        bancoDeareia = new Obstaculo(new Localizacao(18, 18), "Imagens/areia2.jpg");
+        bancoDeareia = new Obstaculo(new Localizacao(18, 18), "Imagens/areia2.png");
         mapa.adicionarObstaculo(bancoDeareia);
     }
 
@@ -132,10 +132,11 @@ public class Simulacao {
         mapa.adicionarItem(veiculo);//Inicializando o mapa com o veículo
         
         veiculos.add(veiculo); // Adiciona um veiculo no arraylist de veiculos
+
         // Criando uma viagem para cada veiculo
         // É escolhido um número aleatório entre 500 e 5000 para representar a quantidade de passageiros do navio
         // É escolhido um número aleatório entre 80 e 480 para representar o preço da passagem
-        int numeroDePassageiros = rand.nextInt(5000) + 500;
+        int numeroDePassageiros = rand.nextInt(4501) + 500;
         double valorPassagem = 80 + (rand.nextDouble() * (480 - 80));
         Viagem viagem = new Viagem( veiculo, cidadeOrigem.getNome(), cidadeDestino.getNome(), numeroDePassageiros, valorPassagem, veiculo.getDistanciaPercorrida() );  
         gerenciadora.adicionarViagem(viagem);

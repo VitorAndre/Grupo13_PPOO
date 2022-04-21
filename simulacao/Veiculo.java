@@ -22,7 +22,7 @@ public class Veiculo {
         distanciaPercorrida = 0;
         this.localizacaoAtual = localizacao;
         localizacaoDestino = null;
-        imagem = new ImageIcon(getClass().getResource("Imagens/veiculo.jpg")).getImage();
+        imagem = new ImageIcon(getClass().getResource("Imagens/veiculo.png")).getImage();
     }
 
     public Localizacao getLocalizacaoAtual() {
@@ -87,7 +87,7 @@ public class Veiculo {
     public void executarAcao(){
         Localizacao destino = getLocalizacaoDestino();
         // mapa.removerItem(this);
-        if(destino != null) {
+        if(destino != null  &&  !( destino.equals(getLocalizacaoAtual()) )  ){
             Localizacao proximaLocalizacao = proximaLocalizacao(localizacaoDestino);
             if (mapa.getItem(proximaLocalizacao.getX(), proximaLocalizacao.getY()) == null) {   
                 if (mapa.getObstaculo(proximaLocalizacao.getX(), proximaLocalizacao.getY()) == null && 
