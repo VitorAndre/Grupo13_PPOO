@@ -14,7 +14,7 @@ public class Mapa {
     
     /**
      * Cria mapa para alocar itens da simulacao.
-     * @param largura: largura da área de simulacao.
+     * @param largura: largura da area de simulacao.
      * @param altura: altura da area de simulação.
      */
     public Mapa(int largura, int altura) {

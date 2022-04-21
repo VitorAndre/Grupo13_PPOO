@@ -83,7 +83,8 @@ public class Viagem implements Comparable<Viagem> {
     }
 
     /** 
-     * Metodo recebe o preco do combustivel e da quantidade de litros consumidos por km.
+     * Metodo que calcula o lucro de cada viagem
+     * Define o preco do combustivel e a quantidade de litros consumidos por km.
      * Em seguida, usa os dados da classe para calcular o custo e a receita. Por fim,
      * calcula o lucro da viagem.
      */

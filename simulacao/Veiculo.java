@@ -119,7 +119,7 @@ public class Veiculo {
 
     /**
      * Metodo para alterar a localizacao do veiculo no mapa.
-     * Ele e responsavel por realizar o tratamento de colisao, caso o veiculo possa
+     * Ele eh responsavel por realizar o tratamento de colisao, caso o veiculo possa
      * se mover sem risco de colidir a localizacao atual eh alterada para a proxima localizacao.
      * Se existir risco de colisao entre veiculos, ele simplesmente espera o outro se mover.
      * Se existir risco de colisao entre cidades e bancos de areia, ele altera a localizacao de modo
