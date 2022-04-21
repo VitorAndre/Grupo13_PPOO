@@ -26,12 +26,21 @@ public class GerenciadoraViagem {
         viagens.add(umaViagem);        
     }
 
+    /**
+     * Metodo para atribuir os lucros de cada viagem
+     */
+    public void defineLucros() {
+        for (int i = 0; i < viagens.size(); i++) {
+            viagens.get(i).calcularLucro();
+        }
+    }
 
     /** 
      * Metodo para gerar um relatorio contendo os dados de cada viagem.
      * Os dados serão ordenados pelo lucro em ordem decrescente.
      */
     public void imprimirRelatorio(){
+        defineLucros();
         Collections.sort(viagens);
         for(int i = 0; i < viagens.size(); i++){
             System.out.println(i);

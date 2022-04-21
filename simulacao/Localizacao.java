@@ -16,10 +16,20 @@ public class Localizacao {
         this.y = y;
     }
 
+    
+    /** 
+     * Obtem a coordenada x da localização
+     * @return int
+     */
     public int getX() {
         return x;
     }
 
+    
+    /** 
+     * Obtem a coordenada y da localização
+     * @return int
+     */
     public int getY() {
         return y;
     }

@@ -92,15 +92,10 @@ public class Viagem implements Comparable<Viagem> {
      * calcula o lucro da viagem.
      */
      public void calcularLucro(){
-        double precoCombustivelPorLitro = 4000;
+        double precoCombustivelPorLitro = 1450;
         double litrosConsumidosPorKm = 20; 
         double custo = precoCombustivelPorLitro * (litrosConsumidosPorKm * getDistanciaRealPercorrida()) ;
         double receita = numeroDePassageiros * valorPassagem;
-        System.out.println(receita);
-        System.out.println(precoCombustivelPorLitro);
-        System.out.println(litrosConsumidosPorKm);
-        System.out.println(getDistanciaRealPercorrida());
-        System.out.println(custo);
         lucro = receita - custo;
      }
 

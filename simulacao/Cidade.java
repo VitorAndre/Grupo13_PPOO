@@ -1,4 +1,6 @@
-
+/**
+ * Define uma cidade a ser inserida no mapa
+ */
 
 public class Cidade extends Obstaculo {
     private String nome;
@@ -8,6 +10,11 @@ public class Cidade extends Obstaculo {
         this.nome = nome;
     }
 
+    
+    /**
+     * Retorna o nome da cidade
+     * @return String
+     */
     public String getNome() {
         return nome;
     }

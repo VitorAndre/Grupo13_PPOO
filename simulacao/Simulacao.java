@@ -13,6 +13,10 @@ public class Simulacao {
     private GerenciadoraViagem gerenciadora;
     private Random rand;
 
+    /**
+     * Instancia o mapa, o rand, as cidades, os veiculos, a gerenciadora de viagens, adiciona as cidades,
+     * adiciona os obstaculos e instancia a janela de simulacao
+     */
     public Simulacao() {
         rand = new Random();
         mapa = new Mapa();
@@ -29,6 +33,12 @@ public class Simulacao {
 
     }
     
+    /** 
+     * Inicia a simulação
+     * @param numPassos Número máximo de passos realizados em cada iteração
+     * @param quantidadeVeiculos Quantidade de veículos que andarão no mapa 
+     * @param tempoDeEspera Tempo entre cada iteração
+     */
     public void executarSimulacao(int numPassos, int quantidadeVeiculos, int tempoDeEspera){        
         for (int i = 0; i < 10; i++) {
             mapa.resetarItens();
@@ -42,6 +52,9 @@ public class Simulacao {
         gerenciadora.imprimirRelatorio();       
     }
 
+    /**
+     * Define, para cada veiculo, a proxima localizacao a ser atingida
+     */
     private void executarUmPasso() {
         for (int i = 0; i < veiculos.size(); i++) {
             mapa.removerItem(veiculos.get(i));
@@ -51,6 +64,10 @@ public class Simulacao {
         janelaSimulacao.executarAcao();
     }
     
+    /** 
+     * Define o tempo de espera
+     * @param milisegundos Tempo em milissegundos que o sistema vai esperar em cada iteração
+     */
     private void esperar(int milisegundos){
         try{
             Thread.sleep(milisegundos);
@@ -59,6 +76,9 @@ public class Simulacao {
         }
     }
     
+    /**
+     * Adiciona as cidades ao mapa
+     */
     private void adicionarCidades() {   
         //0
         Cidade cancun = new Cidade(new Localizacao(7,10), "Imagens/cancun.png", "Cancun(México)");
@@ -94,6 +114,9 @@ public class Simulacao {
         cidades.add(buenosAires); 
     }
 
+    /**
+     * Adiciona os bancos de areia ao mapa
+    */
     private void adicionarObstaculos() {
         bancoDeareia = new Obstaculo(new Localizacao(8, 25), "Imagens/areia2.png");
         mapa.adicionarObstaculo(bancoDeareia);
@@ -114,6 +137,12 @@ public class Simulacao {
         mapa.adicionarObstaculo(bancoDeareia);
     }
 
+    
+    /** 
+     * Adiciona um veículo ao mapa e cria a Viagem que ele realizará
+     * @param cidadeOrigem Cidade que o navio vai sair, definida de maneira aleatória
+     * @param cidadeDestino Cidade que o navio vai chegar, definida de maneira aleatória
+     */
     private void adicionarVeiculo(Cidade cidadeOrigem, Cidade cidadeDestino) {
         Veiculo veiculo;        
         
@@ -129,6 +158,11 @@ public class Simulacao {
         gerenciadora.adicionarViagem(viagem);
     }
 
+    
+    /** 
+     * Adiciona vários veículos ao mapa, utilizando uma iteração que chama a função adicionarVeiculo
+     * @param quantidadeVeiculos Quantidade total de veículos que estarão no mapa
+     */
     private void adicionarVeiculos(int quantidadeVeiculos) {
         veiculos.clear();
         // ADICIONAR VEICULO, passa como parametro cidade de origem e destino dese veiculo 
