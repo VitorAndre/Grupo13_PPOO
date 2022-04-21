@@ -28,7 +28,6 @@ public class Viagem implements Comparable<Viagem> {
         this.distanciaRealPercorrida = distanciaRealPercorrida;
         this.origem = origem;
         this.destino = destino;
-        calcularLucro();
     }
 
     /** 

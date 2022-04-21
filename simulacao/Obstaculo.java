@@ -8,6 +8,11 @@ public class Obstaculo {
     private Localizacao localizacaoAtual;
     private Image imagem;
 
+    /**
+     * Cria um obstaculo para os navios
+     * @param localizacao Localizacao do obstaculo
+     * @param nomeImagem Nome da imagem que representa o obstaculo
+     */
     public Obstaculo(Localizacao localizacao, String nomeImagem) {
         this.localizacaoAtual = localizacao;
         imagem = new ImageIcon(getClass().getResource(nomeImagem)).getImage();
