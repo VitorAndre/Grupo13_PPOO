@@ -1,5 +1,3 @@
-//package simulacao;
-
 import java.awt.Image;
 import java.util.Random;
 
@@ -59,8 +57,7 @@ public class Veiculo {
      * @return Localizacao para onde se deve ir
      */
     public Localizacao proximaLocalizacao(Localizacao localizacaoDestino){
-        if(localizacaoDestino.equals(this)){//Verifica se já alcancou o destino
-            // tempoParado = tempoParado + 1;
+        if(localizacaoDestino.equals(getLocalizacaoAtual())){//Verifica se já alcancou o destino
             return localizacaoDestino;
         }else{
             int x = getLocalizacaoAtual().getX();
@@ -71,12 +68,12 @@ public class Veiculo {
             int deslocY = y < destY ? 1 : y > destY ? -1 : 0;//Deslocamento de 1 ou 0 ou -1 posição em y
             Localizacao novaLocalizacao;
             if(deslocX != 0 && deslocY != 0){//Se nenhuma coordenada coincide com a localizacao destino
-                if(rand.nextInt(2) == 0){//Atualizar x
+                if(rand.nextInt(2) == 0) {//Atualizar x
                     novaLocalizacao = new Localizacao(x + deslocX, y);
-                }else{//Atualizar y
+                } else {//Atualizar y
                     novaLocalizacao = new Localizacao(x, y + deslocY);
                 }
-            }else{
+            } else {
                 if(deslocX != 0) novaLocalizacao = new Localizacao(x + deslocX, y);
                 else novaLocalizacao = new Localizacao(x, y + deslocY);
             }
@@ -86,15 +83,13 @@ public class Veiculo {
 
     public void executarAcao(){
         Localizacao destino = getLocalizacaoDestino();
-        // mapa.removerItem(this);
         if(destino != null  &&  !( destino.equals(getLocalizacaoAtual()) )  ){
             Localizacao proximaLocalizacao = proximaLocalizacao(localizacaoDestino);
             if (mapa.getItem(proximaLocalizacao.getX(), proximaLocalizacao.getY()) == null) {   
                 if (mapa.getObstaculo(proximaLocalizacao.getX(), proximaLocalizacao.getY()) == null && 
-                    mapa.getCidade(proximaLocalizacao.getX(), proximaLocalizacao.getY()) == null){
-
+                    mapa.getCidade(proximaLocalizacao.getX(), proximaLocalizacao.getY()) == null
+                ){
                     setLocalizacaoAtual(proximaLocalizacao);
-                    //Incrementa uma unidade na distância total toda vez que o navio se move
                     incrementaDistancia();
                 } else {
                     //Altera a localização do veiculo no mapa para evitar o conflito

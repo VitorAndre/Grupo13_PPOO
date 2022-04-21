@@ -14,7 +14,6 @@ public class GerenciadoraViagem {
 
     // Metodo para imprimir resultados
     public void imprimirRelatorio(){
-        //System.out.println("Distancia real entre dois pontos " + viagens.get(0).getDistanciaEntreDoisPontos());
         Collections.sort(viagens);
         for(int i = 0; i < viagens.size(); i++){
             //Relatório das viagens

@@ -1,5 +1,3 @@
-//package simulacao;
-
 import java.util.Random;
 import java.util.*;
 /**
@@ -12,22 +10,16 @@ public class Simulacao {
     private ArrayList<Cidade> cidades;
     private ArrayList<Veiculo> veiculos;
     private Obstaculo bancoDeareia;    
-    //private Viagem viagem;
     private GerenciadoraViagem gerenciadora;
     private Random rand;
 
     public Simulacao() {
-        /*
-        int largura = mapa.getLargura();
-        int altura = mapa.getAltura();
-        */
         rand = new Random();
         mapa = new Mapa();
 
         cidades = new ArrayList<Cidade>();
         veiculos = new ArrayList<Veiculo>();
         gerenciadora = new GerenciadoraViagem();
-
 
         // ADICIONAR CIDADES E OBSTACULOS
         adicionarCidades();
@@ -38,17 +30,15 @@ public class Simulacao {
     }
     
     public void executarSimulacao(int numPassos, int quantidadeVeiculos, int tempoDeEspera){        
-        //adicionarCidades();  APAGAR PQ EH REPETIDO
-        //adicionarObstaculos();  APAGAR PQ EH REPETIDO
-        //for (int i = 0; i < 10; i++) {
-            //mapa.resetarItens();
+        for (int i = 0; i < 10; i++) {
+            mapa.resetarItens();
             adicionarVeiculos(quantidadeVeiculos);
             janelaSimulacao.executarAcao();
             for (int j = 0; j < numPassos; j++) {
                 executarUmPasso();
                 esperar(tempoDeEspera);
             }
-        //}
+        }
         gerenciadora.imprimirRelatorio();       
     }
 
@@ -129,15 +119,12 @@ public class Simulacao {
         
         veiculo = new Veiculo(new Localizacao(cidadeOrigem.getLocalizacaoAtual().getX() -1,cidadeOrigem.getLocalizacaoAtual().getY()), mapa);//Cria um veiculo em uma posicao 
         veiculo.setLocalizacaoDestino(new Localizacao(cidadeDestino.getLocalizacaoAtual().getX() -1,cidadeDestino.getLocalizacaoAtual().getY()));//Define a posicao destino 
-        mapa.adicionarItem(veiculo);//Inicializando o mapa com o veículo
-        
+        mapa.adicionarItem(veiculo);//Inicializando o mapa com o veículo        
         veiculos.add(veiculo); // Adiciona um veiculo no arraylist de veiculos
 
+        int numeroDePassageiros = rand.nextInt(4501) + 500; // É escolhido um número aleatório entre 500 e 5000 para representar a quantidade de passageiros do navio
+        double valorPassagem = 80 + (rand.nextDouble() * (480 - 80)); // É escolhido um número aleatório entre 80 e 480 para representar o preço da passagem
         // Criando uma viagem para cada veiculo
-        // É escolhido um número aleatório entre 500 e 5000 para representar a quantidade de passageiros do navio
-        // É escolhido um número aleatório entre 80 e 480 para representar o preço da passagem
-        int numeroDePassageiros = rand.nextInt(4501) + 500;
-        double valorPassagem = 80 + (rand.nextDouble() * (480 - 80));
         Viagem viagem = new Viagem( veiculo, cidadeOrigem.getNome(), cidadeDestino.getNome(), numeroDePassageiros, valorPassagem, veiculo.getDistanciaPercorrida() );  
         gerenciadora.adicionarViagem(viagem);
     }
