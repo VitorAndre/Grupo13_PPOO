@@ -155,7 +155,7 @@ public class Simulacao {
         int numeroDePassageiros = rand.nextInt(4501) + 500; // É escolhido um número aleatório entre 500 e 5000 para representar a quantidade de passageiros do navio
         double valorPassagem = 80 + (rand.nextDouble() * (480 - 80)); // É escolhido um número aleatório entre 80 e 480 para representar o preço da passagem
         // Criando uma viagem para cada veiculo
-        Viagem viagem = new Viagem( veiculo, cidadeOrigem.getNome(), cidadeDestino.getNome(), numeroDePassageiros, valorPassagem, veiculo.getDistanciaPercorrida() );  
+        Viagem viagem = new Viagem( veiculo, cidadeOrigem.getNome(), cidadeDestino.getNome(), numeroDePassageiros, valorPassagem );  
         gerenciadora.adicionarViagem(viagem);
     }
 

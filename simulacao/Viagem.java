@@ -10,22 +10,19 @@ public class Viagem implements Comparable<Viagem> {
     private double lucro;
     private String origem;
     private String destino;
-    private int distanciaRealPercorrida;
 
     /**
      * Cria uma viagem para armazenar seus dados.
      * @param veiculo: Veiculo.
      * @param numeroDePassageiros: Numero de passageiros.
      * @param valorPassagem: Valor da passagem.
-     * @param distanciaRealPercorrida: Distancia percorrido pelo veiculo.
      * @param origem: Cidade de origem.
      * @param destino: Cidade de destino.
      */
-    public Viagem(Veiculo veiculo, String origem, String destino, int numeroDePassageiros, double valorPassagem, int distanciaRealPercorrida){
+    public Viagem(Veiculo veiculo, String origem, String destino, int numeroDePassageiros, double valorPassagem){
         this.veiculo = veiculo;
         this.numeroDePassageiros = numeroDePassageiros;
-        this.valorPassagem = valorPassagem;
-        this.distanciaRealPercorrida = distanciaRealPercorrida;
+        this.valorPassagem = valorPassagem;        
         this.origem = origem;
         this.destino = destino;
     }
@@ -58,7 +55,7 @@ public class Viagem implements Comparable<Viagem> {
      * @return int
      */
     public int getDistanciaRealPercorrida() {
-        return veiculo.getDistanciaPercorrida() ;
+        return veiculo.getDistanciaPercorrida();
     }
     
     /** 

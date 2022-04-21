@@ -1,16 +1,23 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Fornece a visualizacao dos resultados da simulacao em uma tabela
+ */
 public class JanelaResultado {
 
-    private JFrame frame;
+    private JFrame janela;
     private JTable table;
     private JScrollPane scrollPane;
     private JLabel titulo;
 
-
+    /**
+    * Metodo que cria a janela, a tabela e os demais componentes
+    * Define o titulo das colunas da tabela, por ultimo chama o metodo para montar a janela
+    * @param resultados matriz com os resultados da simulacao
+    */
     public JanelaResultado( Object[][] resultados){
-        frame = new JFrame("Resultados");
+        janela = new JFrame("Resultados");
 
         String[] columns = {"Indice", "Viagem", "Distância", "Passageiros","Valor da passagem", "Lucro" };
         Object[][] data = resultados;                  
@@ -23,15 +30,18 @@ public class JanelaResultado {
 
     }
 
+    /**
+    * Monta a janela definindo seu tamanho, layout e adicionando componentes
+    */
     private void montarJanela(){
-        frame.setSize(900, 200);
+        janela.setSize(900, 400);
         table.setFillsViewportHeight(true);
         titulo.setFont(new Font("Arial",Font.TRUETYPE_FONT,24));
 
-        frame.getContentPane().setLayout(new BorderLayout());
+        janela.getContentPane().setLayout(new BorderLayout());
 
-        frame.getContentPane().add(titulo,BorderLayout.PAGE_START);
-        frame.getContentPane().add(scrollPane,BorderLayout.CENTER);
+        janela.getContentPane().add(titulo,BorderLayout.PAGE_START);
+        janela.getContentPane().add(scrollPane,BorderLayout.CENTER);
         
         //Definindo tamanho das colunas da tabela
         table.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -44,9 +54,12 @@ public class JanelaResultado {
 
     }
 
+    /**
+    * Exibe a janela e define que a aplicacao sera encerrada ao clicar x
+    */
     public void exibir(){
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        janela.setVisible(true);
+        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
    
 }

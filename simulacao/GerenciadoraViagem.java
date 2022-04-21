@@ -1,6 +1,6 @@
 /**
  * Classe que gerencia as viagens.
- * Ela e responsavel por armazenar todas as viagens e por gerar um relatório contendo
+ * Ela é responsavel por armazenar todas as viagens e por gerar um relatório contendo
  * seus dados.
  */
 
@@ -12,7 +12,7 @@ public class GerenciadoraViagem {
 
     /**
      * Cria vetor para armazenar as viagens.
-     * @param viagens: Vetor contendo todas viagens.
+     * 
      */
     public GerenciadoraViagem(){
         viagens = new ArrayList<Viagem>();        
@@ -53,12 +53,15 @@ public class GerenciadoraViagem {
         }        
     }
 
-    //Metodo para mostrar resultados em uma janela
+    /** 
+     * Metodo para abrir uma janela que mostra os resultados da simulacao
+     * Os dados do resultado da simulação são armazenados em uma matriz
+     * Então é criada uma janela que recebe essa matriz e depois os disponibiliza em uma tabela
+     */
     public void mostrarRelatorioJanela(){
 
         Object[][] data = new Object[viagens.size()][6]; 
 
-        //Formatar dados
         for(int i = 0; i < viagens.size(); i++){
             data[i][0] = i+1;
             data[i][1] = viagens.get(i).getOrigem() +" -> "+ viagens.get(i).getDestino();
