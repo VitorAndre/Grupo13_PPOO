@@ -51,7 +51,7 @@ public class Viagem implements Comparable<Viagem> {
      * @return double
      */
     public double getValorPassagem(){
-        return valorPassagem;
+        return Math.round(valorPassagem*100.0)/100.0 ;
     }
     
     /** 
@@ -65,8 +65,8 @@ public class Viagem implements Comparable<Viagem> {
      * Retorna o lucro.
      * @return double
      */
-    public double getLucro(){
-        return lucro;
+    public double getLucro(){        
+        return Math.round(lucro*100.0)/100.0 ;
     }
     
     /** 
