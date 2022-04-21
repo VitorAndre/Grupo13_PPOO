@@ -42,7 +42,7 @@ public class Simulacao {
         //adicionarObstaculos();  APAGAR PQ EH REPETIDO
         //for (int i = 0; i < 10; i++) {
             //mapa.resetarItens();
-           adicionarVeiculos(quantidadeVeiculos);
+            adicionarVeiculos(quantidadeVeiculos);
             janelaSimulacao.executarAcao();
             for (int j = 0; j < numPassos; j++) {
                 executarUmPasso();
