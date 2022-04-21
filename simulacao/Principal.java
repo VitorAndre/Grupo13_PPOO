@@ -8,7 +8,7 @@ public class Principal {
 
     public static void main(String[] args) {
         Simulacao sim = new Simulacao();
-        sim.executarSimulacao(100, 7, 100);   
+        sim.executarSimulacao(100, 7, 10);   
 
         //sim.imprimirRelatorio();
     }

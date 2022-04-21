@@ -1,0 +1,85 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class JanelaResultado {
+
+    //public static void main(String[] args) {
+
+        private JFrame frame;
+        private JTable table;
+        private JScrollPane scrollPane;
+        private JLabel lblHeading;
+
+        public JanelaResultado(){ 
+            frame = new JFrame("JTable Demo");
+
+            String[] columns = {"Code", "Name", "High", "Low",
+            "Close", "Volume", "Change","Change %"};
+
+            Object[][] data = {
+            {"MBF", "CITYGROUP", 10.16, 10.16, 10.16, 200, 0.08,0.79},
+            {"MBL", "BANK OF AMERICA", 12.66, 12.66, 12.66, 6600, 0.13,1.04},
+            {"MJP", "Morgan Stanley Dean Witter & Co.", 24.97, 24.97, 24.97, 1000, -0.04,-0.16}
+            };
+                      
+
+            table = new JTable(data, columns);
+            scrollPane = new JScrollPane(table);
+            lblHeading = new JLabel("Stock Quotes");
+
+            montarJanela();
+
+        }
+
+        private void montarJanela(){
+            frame.setSize(550, 200);
+            table.setFillsViewportHeight(true);
+            lblHeading.setFont(new Font("Arial",Font.TRUETYPE_FONT,24));
+
+            frame.getContentPane().setLayout(new BorderLayout());
+
+            frame.getContentPane().add(lblHeading,BorderLayout.PAGE_START);
+            frame.getContentPane().add(scrollPane,BorderLayout.CENTER);
+    
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(550, 200);
+            frame.setVisible(true);         
+        }
+
+        public void exibir(){
+            frame.setVisible(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+
+        
+        final JFrame frame = new JFrame("JTable Demo");
+
+        String[] columns = {"Code", "Name", "High", "Low",
+                            "Close", "Volume", "Change","Change %"};
+
+        Object[][] data = {
+            {"MBF", "CITYGROUP", 10.16, 10.16, 10.16, 200, 0.08,0.79},
+            {"MBL", "BANK OF AMERICA", 12.66, 12.66, 12.66, 6600, 0.13,1.04},
+            {"MJP", "Morgan Stanley Dean Witter & Co.", 24.97, 24.97, 24.97, 1000, -0.04,-0.16}
+        };
+
+        /*
+        JTable table = new JTable(data, columns);
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
+
+        JLabel lblHeading = new JLabel("Stock Quotes");
+        lblHeading.setFont(new Font("Arial",Font.TRUETYPE_FONT,24));
+
+        frame.getContentPane().setLayout(new BorderLayout());
+
+        frame.getContentPane().add(lblHeading,BorderLayout.PAGE_START);
+        frame.getContentPane().add(scrollPane,BorderLayout.CENTER);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(550, 200);
+        frame.setVisible(true); */
+        
+    
+    //}
+}

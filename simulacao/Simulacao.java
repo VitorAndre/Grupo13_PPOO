@@ -14,7 +14,7 @@ public class Simulacao {
     private Obstaculo bancoDeareia;    
     //private Viagem viagem;
     private GerenciadoraViagem gerenciadora;
-    private Random rand;
+    private Random rand;    
 
     public Simulacao() {
         /*
@@ -49,7 +49,10 @@ public class Simulacao {
                 esperar(tempoDeEspera);
             }
         //}
-        gerenciadora.imprimirRelatorio();       
+        gerenciadora.imprimirRelatorio(); 
+
+        gerenciadora.mostrarRelatorioJanela();     
+       
     }
 
     private void executarUmPasso() {
