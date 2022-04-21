@@ -49,7 +49,8 @@ public class Simulacao {
                 esperar(tempoDeEspera);
             }
         }
-        gerenciadora.imprimirRelatorio();       
+        gerenciadora.imprimirRelatorio();
+        gerenciadora.mostrarRelatorioJanela();        
     }
 
     /**
