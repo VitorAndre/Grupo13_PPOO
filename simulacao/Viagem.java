@@ -1,4 +1,4 @@
-public class Viagem {
+public class Viagem implements Comparable<Viagem> {
     private Veiculo veiculo;
     private int numeroDePassageiros; 
     private double valorPassagem;
@@ -15,6 +15,7 @@ public class Viagem {
         this.distanciaRealPercorrida = distanciaRealPercorrida;
         this.origem = origem;
         this.destino = destino;
+        calcularLucro();
     }
 
     public Veiculo getVeiculo() {
@@ -60,7 +61,7 @@ public class Viagem {
      * 
      */
 
-     public void CalcularLucro(){
+     public void calcularLucro(){
         double precoCombustivelPorLitro = 1450;
         double litrosConsumidosPorKm = 20; 
         double custo = precoCombustivelPorLitro * (litrosConsumidosPorKm * getDistanciaRealPercorrida()) ;
@@ -68,5 +69,12 @@ public class Viagem {
         lucro = receita - custo;
      }
 
-   
+    @Override
+    public int compareTo(Viagem o) {
+         if (o.getLucro() > getLucro()) {
+            return 1;
+         } else {
+            return -1;
+         }
+     }
 }
