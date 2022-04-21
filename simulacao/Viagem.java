@@ -1,6 +1,6 @@
 /**
  * Classe que representa uma viagem do navio.
- * Ela e responsavel por armazenar os dados da viagem e calcular o lucro da mesma.
+ * Ela eh responsavel por armazenar os dados da viagem e calcular o lucro da mesma.
  */
 
 public class Viagem implements Comparable<Viagem> {

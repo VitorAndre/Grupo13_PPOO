@@ -79,14 +79,14 @@ public class Veiculo {
     }
 
     /**
-     * Metodo para incrementar em uma unidade a distância percorrida pelo veiculo no mapa.
+     * Metodo para incrementar em uma unidade a distancia percorrida pelo veiculo no mapa.
      */
     public void incrementaDistancia(){
         distanciaPercorrida++;
     }
     
     /**
-     * Metodo para mostrar a proxima localizao do veiculo no mapa.
+     * Metodo para mostrar a proxima localizacao do veiculo no mapa.
      * Ele recebe como parametro a localizacao de destino e a partir da sua localizacao atual,
      * decide para qual posicao deve ir no proximo passo.
      * @param localizacaoDestino: localizacao que se deseja alcancar.
@@ -120,7 +120,7 @@ public class Veiculo {
     /**
      * Metodo para alterar a localizacao do veiculo no mapa.
      * Ele e responsavel por realizar o tratamento de colisao, caso o veiculo possa
-     * se mover sem risco de colidir a localizacao atual e alterada para a proxima localizacao.
+     * se mover sem risco de colidir a localizacao atual eh alterada para a proxima localizacao.
      * Se existir risco de colisao entre veiculos, ele simplesmente espera o outro se mover.
      * Se existir risco de colisao entre cidades e bancos de areia, ele altera a localizacao de modo
      * a evitar a colisao. 

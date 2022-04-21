@@ -34,10 +34,10 @@ public class Simulacao {
     }
     
     /** 
-     * Inicia a simulação
-     * @param numPassos Número máximo de passos realizados em cada iteração
-     * @param quantidadeVeiculos Quantidade de veículos que andarão no mapa 
-     * @param tempoDeEspera Tempo entre cada iteração
+     * Inicia a simulacao
+     * @param numPassos Numero maximo de passos realizados em cada iteracao
+     * @param quantidadeVeiculos Quantidade de veiculos que andarao no mapa 
+     * @param tempoDeEspera Tempo entre cada iteracao
      */
     public void executarSimulacao(int numPassos, int quantidadeVeiculos, int tempoDeEspera){        
         for (int i = 0; i < 10; i++) {
@@ -67,7 +67,7 @@ public class Simulacao {
     
     /** 
      * Define o tempo de espera
-     * @param milisegundos Tempo em milissegundos que o sistema vai esperar em cada iteração
+     * @param milisegundos Tempo em milissegundos que o sistema vai esperar em cada iteracao
      */
     private void esperar(int milisegundos){
         try{
@@ -140,9 +140,9 @@ public class Simulacao {
 
     
     /** 
-     * Adiciona um veículo ao mapa e cria a Viagem que ele realizará
-     * @param cidadeOrigem Cidade que o navio vai sair, definida de maneira aleatória
-     * @param cidadeDestino Cidade que o navio vai chegar, definida de maneira aleatória
+     * Adiciona um veiculo ao mapa e cria a Viagem que ele realizara
+     * @param cidadeOrigem Cidade que o navio vai sair, definida de maneira aleatoria
+     * @param cidadeDestino Cidade que o navio vai chegar, definida de maneira aleatoria
      */
     private void adicionarVeiculo(Cidade cidadeOrigem, Cidade cidadeDestino) {
         Veiculo veiculo;        
@@ -161,8 +161,8 @@ public class Simulacao {
 
     
     /** 
-     * Adiciona vários veículos ao mapa, utilizando uma iteração que chama a função adicionarVeiculo
-     * @param quantidadeVeiculos Quantidade total de veículos que estarão no mapa
+     * Adiciona vários veiculos ao mapa, utilizando uma iteracao que chama a funcao adicionarVeiculo
+     * @param quantidadeVeiculos Quantidade total de veiculos que estarao no mapa
      */
     private void adicionarVeiculos(int quantidadeVeiculos) {
         veiculos.clear();
@@ -170,7 +170,7 @@ public class Simulacao {
         for(int i = 0; i < quantidadeVeiculos; i++){
             int indiceOrigem = rand.nextInt(8); //nextInt(8) gera numero aleatorio entre 0 e 7
             int indiceDestino = rand.nextInt(8); 
-            while (indiceDestino == indiceOrigem) { //garante que inicio e destino não sejam iguais
+            while (indiceDestino == indiceOrigem) { //garante que inicio e destino nao sejam iguais
                 indiceDestino = rand.nextInt(8);
             }
             Cidade cidadeOrigem = cidades.get(indiceOrigem);

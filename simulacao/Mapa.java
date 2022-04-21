@@ -15,7 +15,7 @@ public class Mapa {
     /**
      * Cria mapa para alocar itens da simulacao.
      * @param largura: largura da área de simulacao.
-     * @param altura: altura da área de simulação.
+     * @param altura: altura da area de simulação.
      */
     public Mapa(int largura, int altura) {
         this.largura = largura;
@@ -68,7 +68,7 @@ public class Mapa {
     }
     
     /**
-     * Apaga todos os veículos que estao inseridos no mapa
+     * Apaga todos os veiculos que estao inseridos no mapa
      */
     public void resetarItens() {
         itens = new Veiculo[altura][largura];

@@ -49,7 +49,7 @@ public class JanelaSimulacao extends JFrame{
     /**
      * Fornece uma visualizacao grafica do mapa. Esta eh 
      * uma classe interna que define os componentes da GUI.
-     * Ela contém alguns detalhes mais avancados sobre GUI 
+     * Ela contem alguns detalhes mais avancados sobre GUI 
      * que voce pode ignorar para realizacao do seu trabalho.
      */    
     private class VisaoMapa extends JPanel{

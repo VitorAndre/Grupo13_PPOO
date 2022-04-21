@@ -1,5 +1,5 @@
 /**
- * Representa uma localização no mapa
+ * Representa uma localizacao no mapa
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class Localizacao {
@@ -7,7 +7,7 @@ public class Localizacao {
     private int y;
 
     /**
-     * Representa uma localização na cidade
+     * Representa uma localizacao na cidade
      * @param x Coordenada x: deve ser maior ou igual a 0.
      * @param y Coordenada y: deve ser maior ou igual a 0.
      */
@@ -18,7 +18,7 @@ public class Localizacao {
 
     
     /** 
-     * Obtem a coordenada x da localização
+     * Obtem a coordenada x da localizacao
      * @return int
      */
     public int getX() {
@@ -27,7 +27,7 @@ public class Localizacao {
 
     
     /** 
-     * Obtem a coordenada y da localização
+     * Obtem a coordenada y da localizacao
      * @return int
      */
     public int getY() {

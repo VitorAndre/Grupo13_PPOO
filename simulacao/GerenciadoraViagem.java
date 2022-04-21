@@ -1,6 +1,6 @@
 /**
  * Classe que gerencia as viagens.
- * Ela é responsavel por armazenar todas as viagens e por gerar um relatório contendo
+ * Ela eh responsavel por armazenar todas as viagens e por gerar um relatorio contendo
  * seus dados.
  */
 
